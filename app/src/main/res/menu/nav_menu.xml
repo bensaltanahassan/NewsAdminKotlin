@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homePageDrawer"
+        android:title="Page d'accueil"
+        android:icon="@drawable/outline_home_24"
+        android:checkable="true"/>
+
+    <item
+        android:id="@+id/savedNewsPageDrawer"
+        android:title="Actualités sauvegardées"
+        android:icon="@drawable/outline_bookmarks_outlined_24"
+        android:checkable="true"/>
+
+    <item
+        android:id="@+id/profilePageDrawer"
+        android:title="Profile"
+        android:icon="@drawable/outline_account_circle_24"
+        android:checkable="true"/>
+    <item
+        android:id="@+id/logOutDrawer"
+        android:title="Déconnexion"
+        android:icon="@drawable/outline_exit_24"
+        android:checkable="true"/>
+
+</menu>

@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsadmin.R
+import com.example.newsadmin.fragments.CategoriesFragmentDirections
 import com.example.newsadmin.models.Category
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -63,6 +64,8 @@ class CategoriesAdapter(
 
 
         holder.itemView.setOnClickListener {
+            val action = CategoriesFragmentDirections.actionCategoriesFragmentToCategoryDetailsFragment(currentItem)
+            navController.navigate(action)
 
         }
     }

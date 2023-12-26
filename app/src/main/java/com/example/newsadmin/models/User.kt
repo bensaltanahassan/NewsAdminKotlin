@@ -1,5 +1,4 @@
 package com.example.newsadmin.models
-
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
@@ -10,7 +9,6 @@ data class User(
     val firstName: String ,
     val lastName: String,
     val email: String,
-    val password : String ,
     val isAdmin : Boolean,
     val isAccountVerified : Boolean,
     val profilePhoto : Image,

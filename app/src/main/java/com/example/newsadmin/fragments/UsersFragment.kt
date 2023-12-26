@@ -153,6 +153,9 @@ class UsersFragment : Fragment() {
             onSuccess = { result ->
                 if (result.users.isNotEmpty()){
                     result.users.forEach {
+                        if (it.token == null){
+                            it.token = "user.token"
+                        }
                         users.add(it)
                     }
                 }

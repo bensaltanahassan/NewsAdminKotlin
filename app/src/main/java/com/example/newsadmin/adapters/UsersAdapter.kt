@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsadmin.R
+import com.example.newsadmin.fragments.UsersFragmentDirections
 import com.example.newsadmin.models.User
 
 
@@ -57,6 +58,8 @@ class UsersAdapter(
 
 
         holder.itemView.setOnClickListener {
+            val action = UsersFragmentDirections.actionUsersFragmentToUserDetailsFragment(usersList[position])
+            navController.navigate(action)
 
         }
     }

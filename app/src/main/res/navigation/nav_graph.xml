@@ -100,7 +100,7 @@
         android:label="fragment_user_details"
         tools:layout="@layout/fragment_user_details" >
         <argument
-            android:name="User"
+            android:name="user"
             app:argType="com.example.newsadmin.models.User" />
     </fragment>
     <fragment

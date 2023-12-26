@@ -6,8 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
-import com.example.newsadmin.databinding.FragmentArticleDetailsBinding
+import com.example.newsadmin.databinding.FragmentCategoryDetailsBinding
 import com.example.newsadmin.databinding.FragmentUsersBinding
+import com.example.newsadmin.models.Category
 import com.example.newsadmin.models.User
 
 
@@ -16,7 +17,7 @@ class UserDetailsFragment : Fragment() {
     private val binding get() = _binding!!
 
 
-    val args: com.example.newsadmin.fragments.UserDetailsFragmentArgs by navArgs()
+    val args: UserDetailsFragmentArgs by navArgs()
     private lateinit var user:User
 
 

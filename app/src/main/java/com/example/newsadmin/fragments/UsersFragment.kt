@@ -153,9 +153,6 @@ class UsersFragment : Fragment() {
             onSuccess = { result ->
                 if (result.users.isNotEmpty()){
                     result.users.forEach {
-                        if (it.token == null){
-                            it.token = "user.token"
-                        }
                         users.add(it)
                     }
                 }
@@ -164,6 +161,7 @@ class UsersFragment : Fragment() {
                     binding.recyclerViewUsers.adapter = UsersAdapter(
                         users,
                         findNavController(),
+
                     )
                     binding.recyclerViewUsers.addItemDecoration(divider)
                     binding.progressBar.visibility = View.GONE

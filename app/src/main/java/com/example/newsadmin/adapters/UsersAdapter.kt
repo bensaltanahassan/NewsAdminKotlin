@@ -23,9 +23,9 @@ class UsersAdapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.single_user,parent,false);
-        val holder = MyViewHolder(itemView)
-        return holder;
+        val itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.single_user, parent, false);
+        return MyViewHolder(itemView);
     }
 
     @SuppressLint("SetTextI18n")
@@ -58,7 +58,7 @@ class UsersAdapter(
 
 
         holder.itemView.setOnClickListener {
-            val action = UsersFragmentDirections.actionUsersFragmentToUserDetailsFragment(usersList[position])
+            val action = UsersFragmentDirections.actionUsersFragmentToUserDetailsFragment(currentItem)
             navController.navigate(action)
 
         }

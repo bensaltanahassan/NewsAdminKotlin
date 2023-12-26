@@ -1,6 +1,7 @@
 package com.example.newsadmin.adapters
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,7 +61,6 @@ class UsersAdapter(
         holder.itemView.setOnClickListener {
             val action = UsersFragmentDirections.actionUsersFragmentToUserDetailsFragment(currentItem)
             navController.navigate(action)
-
         }
     }
 

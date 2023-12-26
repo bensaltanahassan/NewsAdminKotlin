@@ -1,19 +1,19 @@
 package com.example.newsadmin.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
-import com.example.newsadmin.databinding.FragmentCategoryDetailsBinding
+import com.example.newsadmin.databinding.FragmentUserDetailsBinding
 import com.example.newsadmin.databinding.FragmentUsersBinding
-import com.example.newsadmin.models.Category
 import com.example.newsadmin.models.User
 
 
 class UserDetailsFragment : Fragment() {
-    private lateinit var _binding : FragmentUsersBinding
+    private lateinit var _binding : FragmentUserDetailsBinding
     private val binding get() = _binding!!
 
 
@@ -25,8 +25,9 @@ class UserDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentUsersBinding.inflate(inflater, container, false)
+        _binding = FragmentUserDetailsBinding.inflate(inflater, container, false)
         user = args.user
+        Log.d("user",user.toString())
         return binding.root
     }
 

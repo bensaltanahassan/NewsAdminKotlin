@@ -76,9 +76,6 @@
         android:label="fragment_users"
         tools:layout="@layout/fragment_users" >
         <action
-            android:id="@+id/action_usersFragment_to_userDetailsFragment"
-            app:destination="@id/userDetailsFragment" />
-        <action
             android:id="@+id/action_usersFragment_to_categoriesFragment"
             app:destination="@id/categoriesFragment" />
         <action
@@ -93,6 +90,9 @@
         <action
             android:id="@+id/action_usersFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_usersFragment_to_userDetailsFragment"
+            app:destination="@id/userDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/userDetailsFragment"

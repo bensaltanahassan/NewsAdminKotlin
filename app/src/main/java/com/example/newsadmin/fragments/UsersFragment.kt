@@ -11,9 +11,17 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.newsadmin.R
+import com.example.newsadmin.adapters.UsersAdapter
+import com.example.newsadmin.data.CategoriesData
+import com.example.newsadmin.data.UsersData
+import com.example.newsadmin.databinding.FragmentCategoriesBinding
 import com.example.newsadmin.databinding.FragmentUsersBinding
+import com.example.newsadmin.models.Category
 import com.example.newsadmin.models.User
+import com.google.android.material.divider.MaterialDividerItemDecoration
 
 class UsersFragment : Fragment() {
     private lateinit var _binding: FragmentUsersBinding
@@ -21,6 +29,9 @@ class UsersFragment : Fragment() {
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var sharedPref: SharedPreferencesManager
     private lateinit var user: User
+    private lateinit var userData: UsersData
+    private lateinit var users:ArrayList<User>
+    private lateinit var usersRecyclerView: RecyclerView
     private val binding get() = _binding
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)){
@@ -38,9 +49,23 @@ class UsersFragment : Fragment() {
         sharedPref = SharedPreferencesManager.getInstance(requireContext())
         user = sharedPref.getUser()!!
 
+        //binding
         _binding = FragmentUsersBinding.inflate(inflater, container, false)
+
+
+
+
+        //category
+        userData = UsersData(user._id,user.token!!)
+        usersRecyclerView = binding.recyclerViewUsers
+        usersRecyclerView.layoutManager = LinearLayoutManager(context,
+            LinearLayoutManager.VERTICAL,false)
+
+        getAllUsers()
+
         toolbar = binding.appBar.myToolBar
         toolbar.title="Utilisateurs"
+
 
         //drawer menu
         toggle = ActionBarDrawerToggle(requireActivity(),binding.drawerLayout,toolbar,
@@ -113,5 +138,42 @@ class UsersFragment : Fragment() {
 
 
         return binding.root
+    }
+
+    private fun getAllUsers() {
+        val divider = MaterialDividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
+
+        requireActivity().runOnUiThread {
+            binding.progressBar.visibility = View.VISIBLE
+            usersRecyclerView.visibility = View.GONE
+        }
+
+        users = ArrayList()
+        userData.getAllUsers(
+            onSuccess = { result ->
+                if (result.users.isNotEmpty()){
+                    result.users.forEach {
+                        users.add(it)
+                    }
+                }
+
+                requireActivity().runOnUiThread {
+                    binding.recyclerViewUsers.adapter = UsersAdapter(
+                        users,
+                        onClickUser = { user ->
+                        }
+
+                    )
+                    binding.recyclerViewUsers.addItemDecoration(divider)
+                    binding.progressBar.visibility = View.GONE
+                    usersRecyclerView.visibility = View.VISIBLE
+                }
+
+
+            },
+            onFailure = { error ->
+                println(error)
+            }
+        )
     }
 }

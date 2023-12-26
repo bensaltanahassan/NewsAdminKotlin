@@ -14,9 +14,8 @@ class Crud {
         fun onFailure(call: Call, e: IOException)
     }
 
-    fun get(url: String,jsonBody: String,authToken: String?, callback: ResponseCallback) {
+    fun get(url: String,jsonBody: String?,authToken: String?, callback: ResponseCallback) {
 
-        val getBody = jsonBody.toRequestBody("application/json".toMediaTypeOrNull())
         val requestBuilder  = Request.Builder()
             .url(url)
             .get()

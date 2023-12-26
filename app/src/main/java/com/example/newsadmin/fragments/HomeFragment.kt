@@ -23,7 +23,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsadmin.R
-import com.example.newsadmin.adapters.CategoriesAdapter
+import com.example.newsadmin.adapters.CategoriesHomeAdapter
 import com.example.newsadmin.adapters.NewsAdapter
 import com.example.newsadmin.data.FavorisData
 import com.example.newsadmin.data.HomeData
@@ -272,7 +272,7 @@ class HomeFragment : Fragment() {
     private fun getAllCategories(listCategory:List<Category>) {
         categoryArrayList = ArrayList<Category>()
         listCategory.forEach { categoryArrayList.add(it) }
-        categoryRecyclerView.adapter  = CategoriesAdapter(
+        categoryRecyclerView.adapter  = CategoriesHomeAdapter(
             categoryArrayList,
             fun(category: Category) {
                 getNewsByCategory(category)

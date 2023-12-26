@@ -11,9 +11,16 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.newsadmin.R
+import com.example.newsadmin.adapters.CategoriesAdapter
+import com.example.newsadmin.adapters.CategoriesHomeAdapter
+import com.example.newsadmin.data.CategoriesData
 import com.example.newsadmin.databinding.FragmentCategoriesBinding
+import com.example.newsadmin.models.Category
 import com.example.newsadmin.models.User
+import com.google.android.material.divider.MaterialDividerItemDecoration
 
 class CategoriesFragment : Fragment() {
     private lateinit var _binding: FragmentCategoriesBinding
@@ -21,6 +28,9 @@ class CategoriesFragment : Fragment() {
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var sharedPref: SharedPreferencesManager
     private lateinit var user: User
+    private lateinit var categoryData: CategoriesData
+    private lateinit var categories:ArrayList<Category>
+    private lateinit var categoryRecyclerView: RecyclerView
     private val binding get() = _binding
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)){
@@ -38,7 +48,20 @@ class CategoriesFragment : Fragment() {
         sharedPref = SharedPreferencesManager.getInstance(requireContext())
         user = sharedPref.getUser()!!
 
+        //binding
         _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
+
+
+
+
+        //category
+        categoryData = CategoriesData(user.token!!)
+        categoryRecyclerView = binding.recyclerViewCategory
+        categoryRecyclerView.layoutManager = LinearLayoutManager(context,
+            LinearLayoutManager.VERTICAL,false)
+
+        getAllCategories()
+
         toolbar = binding.appBar.myToolBar
         toolbar.title="Catégories"
 
@@ -120,5 +143,42 @@ class CategoriesFragment : Fragment() {
 
 
         return binding.root
+    }
+
+    private fun getAllCategories() {
+        val divider = MaterialDividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
+
+        requireActivity().runOnUiThread {
+            binding.progressBar.visibility = View.VISIBLE
+            categoryRecyclerView.visibility = View.GONE
+        }
+
+        categories = ArrayList()
+        categoryData.getAllCategories(
+            onSuccess = { result ->
+                if (result.data.isNotEmpty()){
+                    result.data.forEach {
+                        categories.add(it)
+                    }
+                }
+
+                requireActivity().runOnUiThread {
+                    binding.recyclerViewCategory.adapter = CategoriesAdapter(
+                        categories,
+                        onClickCategory = { category ->
+                        },
+                        currentCategory = null
+                    )
+                    binding.recyclerViewCategory.addItemDecoration(divider)
+                    binding.progressBar.visibility = View.GONE
+                    categoryRecyclerView.visibility = View.VISIBLE
+                }
+
+
+            },
+            onFailure = { error ->
+                println(error)
+            }
+        )
     }
 }

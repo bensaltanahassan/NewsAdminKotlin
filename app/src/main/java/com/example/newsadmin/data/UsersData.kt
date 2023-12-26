@@ -2,6 +2,7 @@ package com.example.newsadmin.data
 
 import Crud
 import android.util.Log
+import com.example.newsadmin.utils.GetAllUsersResponse
 import com.example.newsadmin.utils.UpdateUserResponse
 import com.google.gson.Gson
 import okhttp3.Call
@@ -12,6 +13,41 @@ import java.io.File
 class UsersData(private var userId: String, private var token: String) {
     private val crud:Crud =  Crud();
     private val baseUrl : String = "https://news-api-8kaq.onrender.com/api"
+
+
+
+
+
+
+
+
+    fun getAllUsers(
+        onSuccess : (GetAllUsersResponse) -> Unit,
+        onFailure : (String) -> Unit
+    ){
+        val urlApi : String = "$baseUrl/users"
+        crud.get(
+            urlApi,
+            null,
+            token,
+            object: Crud.ResponseCallback{
+                override fun onResponse(call: Call, response: Response) {
+                    val response = response.body?.string()
+                    val gson = Gson()
+                    val getAllUsersResponse = gson.fromJson(response, GetAllUsersResponse::class.java)
+                    onSuccess(getAllUsersResponse)
+                }
+                override fun onFailure(call: Call, e: IOException) {
+                    onFailure(e.message!!)
+                }
+            }
+        )
+    }
+
+
+
+
+
 
     fun updateUser(
         firstName:String?,

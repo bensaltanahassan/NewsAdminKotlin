@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/drawerLayout"
+    android:background="@color/white"
     tools:context=".fragments.UsersFragment">
 
 
@@ -16,10 +17,29 @@
             android:id="@+id/appBar"
             layout="@layout/appbar"/>
 
-        <TextView
+        <ProgressBar
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:id="@+id/progressBar"
+            android:layout_gravity="center"
+            android:visibility="visible"
+            android:layout_marginTop="200dp" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/hello_blank_fragment" />
+            android:id="@+id/recyclerViewUsers"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:paddingHorizontal="8dp"
+            android:layout_weight="1"
+            />
+
+
+
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigationView"

@@ -34,7 +34,7 @@ class NewsData {
             }
         """.trimIndent()
         val token:String = token
-        crud.get(urlApi,json,token,
+        crud.post(urlApi,json,token,
             object: Crud.ResponseCallback{
                 override fun onResponse(call: Call, response: Response) {
                     val response = response.body?.string()

@@ -240,7 +240,6 @@ class HomeFragment : Fragment() {
                     binding.recyclerViewNews.visibility = View.VISIBLE
                     binding.recyclerViewCategory.visibility = View.VISIBLE
                     getAllCategories(responseHomeData.data.categories)
-                    getAllFavoris(responseHomeData.data.favoris)
                     getAllNews(responseHomeData.data.news)
                 }
             },
@@ -262,7 +261,6 @@ class HomeFragment : Fragment() {
     private fun getAllCategories(listCategory:List<Category>) {
         categoryArrayList = ArrayList<Category>()
         listCategory.forEach { categoryArrayList.add(it) }
-        /*
         categoryRecyclerView.adapter  = CategoriesAdapter(
             categoryArrayList,
             fun(category: Category) {
@@ -272,7 +270,6 @@ class HomeFragment : Fragment() {
             )
 
 
-         */
     }
 
     private fun getNewsByCategory(category: Category){
@@ -321,50 +318,6 @@ class HomeFragment : Fragment() {
     }
 
 
-    private fun onClickMarkButton(news: News) {
-        if (news.isFavorite){
-            val favoris = listFavoris.find { f -> f.article._id == news._id } ?: return
-            favorisData.deleteFromFavoris(
-                favoris,
-                onSuccess = { _ ->
-                    requireActivity().runOnUiThread {
-                        val favoris = listFavoris.find { f -> f.article._id == news._id }
-                        listFavoris.remove(favoris)
-                        Toast.makeText(context, "Supprimé avec succes from favoris", Toast.LENGTH_SHORT).show()
-                    }
-                },
-                onFailure = { error ->
-                    requireActivity().runOnUiThread {
-                        Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
-                    }
-                }
-            )
-
-        }
-        else{
-            favorisData.addToFavoris(
-                news,
-                onSuccess = { responseAddFavoris ->
-                    requireActivity().runOnUiThread {
-                        if (responseAddFavoris.data!=null){
-                            listFavoris.add(responseAddFavoris.data)
-                            Toast.makeText(context, "Ajouté avec succes to favoris", Toast.LENGTH_SHORT).show()
-
-                        } else{
-                            Toast.makeText(context, responseAddFavoris.message, Toast.LENGTH_SHORT).show()
-                        }
-
-                    }
-                },
-                onFailure = { error ->
-                    requireActivity().runOnUiThread {
-                        Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
-                    }
-                }
-            )
-        }
-
-    }
 
 
     private fun getAllNews(listNews:List<News>) {
@@ -377,14 +330,14 @@ class HomeFragment : Fragment() {
                 newsArrayList.add(it)
             }
             if (newRecyclerView.adapter == null) {
-                /*
+
                 newRecyclerView.adapter = NewsAdapter(
                     newsArrayList,
                     findNavController(),
-                    ::onClickMarkButton
+
                     )
 
-                 */
+
                 newRecyclerView.addItemDecoration(divider)
 
             } else {
@@ -402,12 +355,6 @@ class HomeFragment : Fragment() {
     }
 
 
-    private fun getAllFavoris(favoris:List<Favoris>) {
-        requireActivity().runOnUiThread {
-            listFavoris.clear()
-            favoris.forEach { listFavoris.add(it) }
-        }
-    }
 
 
 

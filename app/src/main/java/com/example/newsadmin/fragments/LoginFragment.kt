@@ -56,6 +56,16 @@ class LoginFragment : Fragment() {
             onSuccess = { loginResponse ->
                 val sharedPreferencesManager = SharedPreferencesManager.getInstance(requireContext())
                 if (loginResponse.user != null) {
+                    if (!loginResponse.user.isAdmin) {
+                        requireActivity().runOnUiThread {
+                            Toast.makeText(
+                                requireContext(),
+                                "Vous n'avez le droit d'accéder à cette application",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        return@login
+                    }
                     sharedPreferencesManager.saveUser(loginResponse.user)
                     sharedPreferencesManager.saveToken(loginResponse.user.token!!)
                     requireActivity().runOnUiThread {

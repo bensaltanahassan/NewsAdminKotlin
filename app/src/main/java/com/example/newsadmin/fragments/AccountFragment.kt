@@ -96,9 +96,6 @@ class AccountFragment : Fragment() {
             },
         )
 
-
-
-
         //drawer menu
         toggle = ActionBarDrawerToggle(requireActivity(),binding.drawerLayout,toolbar,
             R.string.open,
@@ -106,8 +103,68 @@ class AccountFragment : Fragment() {
         )
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-        binding.navView.setCheckedItem(R.id.profilePageDrawer)
+        binding.navView.setCheckedItem(R.id.homePageDrawer)
         binding.navView.getHeaderView(0).findViewById<TextView>(R.id.nameHeaderMenu).text = user.firstName + " " + user.lastName
+
+        binding.navView.setNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.homePageDrawer -> {
+                    findNavController().navigate(R.id.action_accountFragment_to_homeFragment)
+                    true
+                }
+                R.id.categoriesPageDrawer -> {
+                    findNavController().navigate(R.id.action_accountFragment_to_categoriesFragment)
+                    true
+                }
+                R.id.usersPageDrawer -> {
+                    findNavController().navigate(R.id.action_accountFragment_to_usersFragment)
+                    true
+                }
+                R.id.profilePageDrawer -> {
+                    true
+                }
+                R.id.logOutDrawer -> {
+                    sharedPref.logout()
+                    findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
+                    true
+                }
+                else -> false
+            }
+
+        }
+        //end drawer menu
+
+        // Bottom nav bar settings
+        val bottomNavigationView = binding.bottomNavigationView
+        val currentDestinationId = findNavController().currentDestination?.id
+        bottomNavigationView.selectedItemId = when (currentDestinationId) {
+            R.id.homeFragment -> R.id.home
+            R.id.accountFragment -> R.id.settings
+            else -> R.id.home // Set a default value or handle other cases
+        }
+        binding.bottomNavigationView.setOnItemSelectedListener {
+            when(it.itemId){
+                R.id.home -> {
+                    findNavController().navigate(R.id.action_accountFragment_to_homeFragment)
+                    true
+                }
+                R.id.categories -> {
+                    findNavController().navigate(R.id.action_homeFragment_to_categoriesFragment)
+                    true
+                }
+                R.id.users -> {
+                    findNavController().navigate(R.id.action_homeFragment_to_usersFragment)
+                    true
+                }
+                R.id.settings -> {
+                    true
+                }
+                else -> false
+            }
+        }
+        // End bottom nav bar settings
+
+
 
 
 
@@ -136,51 +193,10 @@ class AccountFragment : Fragment() {
 
 
 
-        binding.navView.setNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.homePageDrawer -> {
-                    findNavController().navigate(R.id.action_accountFragment_to_homeFragment)
-                    true
-                }
-                R.id.savedNewsPageDrawer -> {
-                    true
-                }
-                R.id.logOutDrawer -> {
-                    sharedPref.logout()
-                    findNavController().navigate(R.id.action_accountFragment_to_loginFragment)
-                    true
-                }
-                else -> false
-            }
-        }
-        //end drawer menu
 
 
 
-        //bottom navigation view
-        val bottomNavigationView = binding.bottomNavigationView
-        val currentDestinationId = findNavController().currentDestination?.id
-        bottomNavigationView.selectedItemId = when (currentDestinationId) {
-            R.id.homeFragment -> R.id.home
-            R.id.accountFragment -> R.id.settings
-            else -> R.id.home
-        }
-        binding.bottomNavigationView.setOnItemSelectedListener {
-            when(it.itemId){
-                R.id.settings -> {
-                    true
-                }
-                R.id.saved -> {
-                    true
-                }
-                R.id.home -> {
-                    findNavController().navigate(R.id.action_accountFragment_to_homeFragment)
-                    true
-                }
-                else -> false
-            }
-        }
-        //end bottom navigation view
+
         binding.firstName.setText(user.firstName)
         binding.lastName.setText(user.lastName)
         binding.email.setText(user.email)

@@ -2,14 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/homePageDrawer"
-        android:title="Page d'accueil"
+        android:title="Articles"
         android:icon="@drawable/outline_home_24"
         android:checkable="true"/>
-
     <item
-        android:id="@+id/savedNewsPageDrawer"
-        android:title="Actualités sauvegardées"
-        android:icon="@drawable/outline_bookmarks_outlined_24"
+        android:id="@+id/categoriesPageDrawer"
+        android:title="Catégories"
+        android:icon="@drawable/outline_category_24"
+        android:checkable="true"/>
+    <item
+        android:id="@+id/usersPageDrawer"
+        android:title="Utilisateurs"
+        android:icon="@drawable/outline_group_24"
         android:checkable="true"/>
 
     <item

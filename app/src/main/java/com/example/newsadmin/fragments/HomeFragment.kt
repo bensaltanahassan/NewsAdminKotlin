@@ -74,24 +74,15 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-
         sharedPref = SharedPreferencesManager.getInstance(requireContext())
         if (!sharedPref.isLoggedIn()) {
             findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
         }
 
-
-
         user = sharedPref.getUser()!!
         homeData = HomeData(user._id,user.token!!)
         newsData = NewsData(user._id,user.token!!)
         favorisData = FavorisData(user._id,user.token!!)
-
-
-
-
-
 
         newsArrayList = ArrayList<News>()
         listFavoris = ArrayList<Favoris>()
@@ -99,6 +90,11 @@ class HomeFragment : Fragment() {
         toolbar = binding.appBarHome.myToolBar
 
 
+        //floating action button
+        binding.floatingActionButton.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_addArticleFragment)
+        }
+        //end floating action button
 
         //drawer menu
         toggle = ActionBarDrawerToggle(requireActivity(),binding.drawerLayout,toolbar,
@@ -112,7 +108,15 @@ class HomeFragment : Fragment() {
 
         binding.navView.setNavigationItemSelectedListener {
             when(it.itemId){
-                R.id.savedNewsPageDrawer -> {
+                R.id.homePageDrawer -> {
+                    true
+                }
+                R.id.categoriesPageDrawer -> {
+                    findNavController().navigate(R.id.action_homeFragment_to_categoriesFragment)
+                    true
+                }
+                R.id.usersPageDrawer -> {
+                    findNavController().navigate(R.id.action_homeFragment_to_usersFragment)
                     true
                 }
                 R.id.profilePageDrawer -> {
@@ -128,6 +132,36 @@ class HomeFragment : Fragment() {
             }
         }
         //end drawer menu
+
+        // Bottom nav bar settings
+        val bottomNavigationView = binding.bottomNavigationView
+        val currentDestinationId = findNavController().currentDestination?.id
+        bottomNavigationView.selectedItemId = when (currentDestinationId) {
+            R.id.homeFragment -> R.id.home
+            R.id.accountFragment -> R.id.settings
+            else -> R.id.home // Set a default value or handle other cases
+        }
+        binding.bottomNavigationView.setOnItemSelectedListener {
+            when(it.itemId){
+                R.id.home -> {
+                    true
+                }
+                R.id.categories -> {
+                    findNavController().navigate(R.id.action_homeFragment_to_categoriesFragment)
+                    true
+                }
+                R.id.users -> {
+                    findNavController().navigate(R.id.action_homeFragment_to_usersFragment)
+                    true
+                }
+                R.id.settings -> {
+                    findNavController().navigate(R.id.action_homeFragment_to_accountFragment)
+                    true
+                }
+                else -> false
+            }
+        }
+        // End bottom nav bar settings
 
 
         //access to the image in the header in the drawer
@@ -160,30 +194,7 @@ class HomeFragment : Fragment() {
         val searchButton:View = binding.appBarHome.searchButtonHome
         binding.noNewsLayout.visibility = View.GONE
 
-        // Bottom nav bar settings
-        val bottomNavigationView = binding.bottomNavigationView
-        val currentDestinationId = findNavController().currentDestination?.id
-        bottomNavigationView.selectedItemId = when (currentDestinationId) {
-            R.id.homeFragment -> R.id.home
-            R.id.accountFragment -> R.id.settings
-            else -> R.id.home // Set a default value or handle other cases
-        }
 
-        binding.bottomNavigationView.setOnItemSelectedListener {
-            when(it.itemId){
-                R.id.home -> {
-                    true
-                }
-                R.id.saved -> {
-                    true
-                }
-                R.id.settings -> {
-                    findNavController().navigate(R.id.action_homeFragment_to_accountFragment)
-                    true
-                }
-                else -> false
-            }
-        }
 
         val backButton:View = binding.appBarHome.backButtonHome
 

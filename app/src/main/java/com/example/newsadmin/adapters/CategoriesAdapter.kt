@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsadmin.R
 import com.example.newsadmin.models.Category
@@ -17,10 +18,9 @@ import java.util.Locale
 
 class CategoriesAdapter(
     private val categoryList: ArrayList<Category>,
-    private val onClickCategory: (Category) -> Unit,
-    private var currentCategory: Category?
+    private val navController: NavController,
 
-): RecyclerView.Adapter<CategoriesAdapter.MyViewHolder>(){
+    ): RecyclerView.Adapter<CategoriesAdapter.MyViewHolder>(){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -63,11 +63,7 @@ class CategoriesAdapter(
 
 
         holder.itemView.setOnClickListener {
-            if (currentItem != currentCategory) {
-                currentCategory = currentItem
-                onClickCategory(currentItem)
-                notifyDataSetChanged()
-            }
+
         }
     }
 

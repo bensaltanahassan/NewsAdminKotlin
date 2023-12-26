@@ -165,9 +165,7 @@ class CategoriesFragment : Fragment() {
                 requireActivity().runOnUiThread {
                     binding.recyclerViewCategory.adapter = CategoriesAdapter(
                         categories,
-                        onClickCategory = { category ->
-                        },
-                        currentCategory = null
+                        findNavController()
                     )
                     binding.recyclerViewCategory.addItemDecoration(divider)
                     binding.progressBar.visibility = View.GONE

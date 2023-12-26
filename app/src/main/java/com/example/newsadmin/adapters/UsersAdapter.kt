@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsadmin.R
 import com.example.newsadmin.models.User
@@ -15,9 +16,9 @@ import com.example.newsadmin.models.User
 
 class UsersAdapter(
     private val usersList: ArrayList<User>,
-    private val onClickUser: (User) -> Unit,
+    private val navController: NavController,
 
-): RecyclerView.Adapter<UsersAdapter.MyViewHolder>(){
+    ): RecyclerView.Adapter<UsersAdapter.MyViewHolder>(){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {

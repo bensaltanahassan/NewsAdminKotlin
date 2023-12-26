@@ -160,9 +160,7 @@ class UsersFragment : Fragment() {
                 requireActivity().runOnUiThread {
                     binding.recyclerViewUsers.adapter = UsersAdapter(
                         users,
-                        onClickUser = { user ->
-                        }
-
+                        findNavController(),
                     )
                     binding.recyclerViewUsers.addItemDecoration(divider)
                     binding.progressBar.visibility = View.GONE

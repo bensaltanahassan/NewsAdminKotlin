@@ -1,4 +1,10 @@
 package com.example.newsadmin.models
+
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+
+@Parcelize
 data class User(
     val _id: String,
     val firstName: String ,
@@ -12,4 +18,4 @@ data class User(
     val createdAt: String,
     val updatedAt: String,
     var token: String? = null
-)
+): Parcelable

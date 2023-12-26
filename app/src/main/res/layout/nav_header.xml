@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    android:background="@color/purple"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:gravity="center_vertical"
+    >
+
+
+    <ProgressBar
+        android:id="@+id/progressBarImageHeader"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:visibility="gone"
+
+        />
+
+
+    <io.getstream.avatarview.AvatarView
+        android:id="@+id/avatarViewHeader"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        app:avatarViewBorderColor="@color/yellow"
+        app:avatarViewBorderWidth="3dp"
+        android:src="@drawable/sport"
+        app:avatarViewIndicatorBorderColor="@color/white"
+        app:avatarViewIndicatorBorderSizeCriteria="10"
+        app:avatarViewIndicatorColor="@color/green"
+        app:avatarViewIndicatorEnabled="true"
+        app:avatarViewIndicatorPosition="bottomRight"
+        app:avatarViewIndicatorSizeCriteria="9"
+        app:avatarViewInitialsTextStyle="bold"
+        app:avatarViewShape="circle" />
+
+
+
+
+
+
+    <TextView
+        android:id="@+id/nameHeaderMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hassan Bensaltana"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp" />
+
+
+
+</LinearLayout>

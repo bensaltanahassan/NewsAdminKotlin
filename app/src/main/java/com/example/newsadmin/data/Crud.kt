@@ -112,6 +112,45 @@ class Crud {
         })
     }
 
+    fun postWithImage(
+        url:String,
+        authToken: String?,
+        file: File,
+        callback: ResponseCallback,
+        fields: Map<String, Any>
+    ){
+        val requestBody: RequestBody
+        val builder = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+        fields.forEach { (key, value) ->
+            builder.addFormDataPart(key, value.toString())
+        }
+        builder.addFormDataPart("image", file.name, file.asRequestBody("image/*".toMediaTypeOrNull()))
+        requestBody = builder.build()
+
+        val requestBuilder  = Request.Builder()
+
+        if (authToken != null) {
+            val headerValue = "Bearer $authToken"
+            requestBuilder.addHeader("Authorization", headerValue)
+        }
+
+        val request = requestBuilder
+            .url(url)
+            .post(requestBody)
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onResponse(call: Call, response: Response) {
+                callback.onResponse(call, response)
+            }
+
+            override fun onFailure(call: Call, e: IOException) {
+                callback.onFailure(call,e)
+            }
+        })
+    }
+
     fun putWithImage(
         url: String,
         firstName:String,

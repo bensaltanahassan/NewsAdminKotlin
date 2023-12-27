@@ -27,9 +27,9 @@
             >
 
             <ImageView
+                android:clickable="true"
                 android:id="@+id/image_add_category"
                 android:layout_width="match_parent"
-                android:scaleType="centerCrop"
                 android:layout_height="match_parent"
                 android:src="@drawable/image_not_available"
                 android:visibility="visible"

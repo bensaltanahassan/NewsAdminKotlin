@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import okhttp3.Call
 import okhttp3.Response
 import okio.IOException
+import java.io.File
 
 class CategoriesData {
     private val crud:Crud =  Crud();
@@ -15,6 +16,16 @@ class CategoriesData {
 
     constructor(token:String){
         this.token = token
+    }
+
+
+
+    fun addCategory(
+        name:String,
+        description:String,
+        image:File
+    ){
+
     }
 
     fun getAllCategories(

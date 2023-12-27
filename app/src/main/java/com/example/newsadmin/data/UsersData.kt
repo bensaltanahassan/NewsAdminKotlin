@@ -14,13 +14,6 @@ class UsersData(private var userId: String, private var token: String) {
     private val crud:Crud =  Crud();
     private val baseUrl : String = "https://news-api-8kaq.onrender.com/api"
 
-
-
-
-
-
-
-
     fun getAllUsers(
         onSuccess : (GetAllUsersResponse) -> Unit,
         onFailure : (String) -> Unit

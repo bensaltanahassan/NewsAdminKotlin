@@ -23,14 +23,14 @@
             app:cardElevation="2dp"
             app:cardBackgroundColor="@color/white"
             >
+
             <ImageView
                 android:id="@+id/image_user_details"
                 android:layout_width="match_parent"
                 android:scaleType="centerCrop"
                 android:layout_height="match_parent"
                 android:src="@drawable/image_not_available"
-                android:visibility="gone"
-                ></ImageView>
+                android:visibility="gone" />
             <ProgressBar
                 android:layout_width="100dp"
                 android:layout_height="100dp"
@@ -47,6 +47,7 @@
         android:orientation="vertical"
         android:layout_margin="20dp"
         >
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,8 +55,8 @@
             android:text="Anas Hasna"
             android:textSize="26sp"
             android:textStyle="bold"
-            android:layout_marginBottom="10dp"
-            ></TextView>
+            android:layout_marginBottom="10dp" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,12 +64,13 @@
             android:text="Member since 1 hours ago"
             android:textSize="18sp"
             android:textStyle="normal"
-            android:layout_marginBottom="20dp"
-            ></TextView>
+            android:layout_marginBottom="20dp" />
+
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"></com.google.android.material.divider.MaterialDivider>
+            android:layout_marginBottom="10dp" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -76,8 +78,7 @@
             android:text="Account Verified"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_marginBottom="10dp"
-            ></TextView>
+            android:layout_marginBottom="10dp" />
         <TextView
             android:layout_width="80dp"
             android:id="@+id/custom_user_create_at"
@@ -96,6 +97,7 @@
             >
 
         </com.google.android.material.divider.MaterialDivider>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -103,14 +105,14 @@
             android:text="Contact Informations"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_marginBottom="10dp"
-            ></TextView>
+            android:layout_marginBottom="10dp" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="20dp"
             >
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -122,22 +124,22 @@
                 android:background="@drawable/border_background"
                 android:layout_marginRight="10dp"
                 android:paddingHorizontal="5dp"
-                android:paddingVertical="5dp"
-                ></TextView>
+                android:paddingVertical="5dp" />
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginLeft="10dp"
                 >
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/user_txt_email"
                     android:text="Adresse Email"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    ></TextView>
+                    android:textStyle="bold" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -145,8 +147,7 @@
                     android:text="text@gmail.com"
                     android:textSize="18sp"
                     android:textStyle="normal"
-                    android:textColor="@color/purple_700"
-                    ></TextView>
+                    android:textColor="@color/purple_700" />
             </LinearLayout>
         </LinearLayout>
         <com.google.android.material.divider.MaterialDivider

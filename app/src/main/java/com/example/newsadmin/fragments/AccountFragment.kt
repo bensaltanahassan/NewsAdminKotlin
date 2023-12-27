@@ -149,7 +149,7 @@ class AccountFragment : Fragment() {
                     true
                 }
                 R.id.categories -> {
-                    findNavController().navigate(R.id.action_homeFragment_to_categoriesFragment)
+                    findNavController().navigate(R.id.action_accountFragment_to_categoriesFragment)
                     true
                 }
                 R.id.users -> {

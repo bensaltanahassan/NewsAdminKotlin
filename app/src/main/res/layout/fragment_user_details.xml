@@ -52,6 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/user_name"
+            android:textColor="@color/black"
             android:text="Anas Hasna"
             android:textSize="26sp"
             android:textStyle="bold"
@@ -61,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/uer_created_at"
-            android:text="Member since 1 hours ago"
+            android:text="Membre depuis 1 hours ago"
             android:textSize="18sp"
             android:textStyle="normal"
             android:layout_marginBottom="20dp" />
@@ -75,7 +76,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/user_is_account_verified"
-            android:text="Account Verified"
+            android:text="Compte vérifier :"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginBottom="10dp" />
@@ -103,6 +105,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/user_contact_info"
             android:text="Contact Informations"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginBottom="10dp" />

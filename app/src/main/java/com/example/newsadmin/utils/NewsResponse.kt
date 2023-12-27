@@ -20,3 +20,8 @@ data class  SingleNewsResponse(
     val rating: Rating? = null,
     val avgRating: Int? = null,
 )
+
+data class AddArticleResponse(
+    val status: String,
+    val data: News
+)

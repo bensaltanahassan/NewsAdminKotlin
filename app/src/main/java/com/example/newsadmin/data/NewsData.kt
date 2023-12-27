@@ -2,12 +2,14 @@ package com.example.newsadmin.data
 
 import Crud
 import com.example.newsadmin.models.Category
+import com.example.newsadmin.utils.AddCategoryResponse
 import com.example.newsadmin.utils.GetSingleNewsResponse
 import com.example.newsadmin.utils.ResponseNewsData
 import com.google.gson.Gson
 import okhttp3.Call
 import okhttp3.Response
 import okio.IOException
+import java.io.File
 
 class NewsData {
     private val crud:Crud =  Crud();
@@ -103,7 +105,41 @@ class NewsData {
             }
         )
     }
+    fun addArticle(
+        title:String,
+        author:String,
+        description:String,
+        image:File,
+        categoryId:String,
+        onSuccess: (AddCategoryResponse) -> Unit,
+        onFailure: (String) -> Unit
+    ){
+        val urlApi : String = "$baseUrl/articles"
+        val fieldsMap = mapOf<String,String>(
+            "title" to title,
+            "author" to author,
+            "content" to description,
+            "categoryId" to categoryId
+        )
+        crud.postWithImage(
+            urlApi,
+            token,
+            image,
+            fieldsMap,
+            object: Crud.ResponseCallback{
+                override fun onResponse(call: Call, response: Response) {
+                    val response = response.body?.string()
+                    val gson = Gson()
+                    val addArticleResponse = gson.fromJson(response, AddCategoryResponse::class.java)
+                    onSuccess(addArticleResponse)
+                }
+                override fun onFailure(call: Call, e: IOException) {
+                    onFailure(e.message!!)
+                }
+            }
+        )
 
+    }
 
 
 

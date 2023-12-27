@@ -80,61 +80,9 @@ class AddArticleFragment : Fragment() {
         }
 
         categories_spinner = binding.categorySpinner
-        /*
-        //seting up spinner data
-        val categoriesNames = categoriesData.map { category -> category.name }
-        val adapter = CustomSpinnerAdapter(requireContext(), categoriesNames.toTypedArray())
-        requireActivity().runOnUiThread {
-            categories_spinner.adapter = adapter
-            categories_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View?, position: Int, id: Long) {
-                    selectedCategory = categoriesData[position]
-                    Log.d("selectedCategory",selectedCategory.toString())
-                }
-
-                override fun onNothingSelected(parentView: AdapterView<*>) {
-                }
-            }
-        }
-
-         */
-
-
         return binding.root
     }
-    /*
-    suspend fun getAllCategories(): ArrayList<Category> {
-        return suspendCoroutine { continuation ->
-            val categories = ArrayList<Category>()
-            categoryData.getAllCategories(
-                onSuccess = { result ->
-                    if (result.data.isNotEmpty()) {
-                        requireActivity().runOnUiThread {
-                            binding.progressBar.visibility = View.GONE
-                            binding.addArticleButton.visibility = View.VISIBLE
-                        }
 
-                        result.data.forEach {
-                            categories.add(it)
-                        }
-
-                        // Return the categories list
-                        continuation.resume(categories)
-                    }
-
-                    requireActivity().runOnUiThread {
-
-                    }
-                },
-                onFailure = { error ->
-                    println(error)
-                    // You may handle the error or return an empty list
-                    continuation.resume(categories)
-                }
-            )
-        }
-    }
-     */
 
     private suspend fun getAllCategories(): ArrayList<Category> {
         return suspendCoroutine { continuation ->

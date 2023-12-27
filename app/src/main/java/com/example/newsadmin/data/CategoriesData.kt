@@ -26,6 +26,8 @@ class CategoriesData {
         image:File
     ){
 
+        val urlApi : String = baseUrl
+
     }
 
     fun getAllCategories(

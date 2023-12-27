@@ -116,8 +116,9 @@ class Crud {
         url:String,
         authToken: String?,
         file: File,
+        fields: Map<String, Any>,
         callback: ResponseCallback,
-        fields: Map<String, Any>
+
     ){
         val requestBody: RequestBody
         val builder = MultipartBody.Builder()

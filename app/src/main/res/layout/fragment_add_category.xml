@@ -34,14 +34,7 @@
                 android:src="@drawable/image_not_available"
                 android:visibility="visible"
                  />
-            <ProgressBar
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:id="@+id/progressBarAddCategory"
-                android:layout_gravity="center"
-                android:visibility="gone"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="40dp"/>
+
         </androidx.cardview.widget.CardView>
 
 
@@ -96,7 +89,12 @@
             android:layout_marginTop="10dp"
             />
 
-
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/progressBar"
+            android:visibility="gone"
+            android:layout_marginTop="20dp"/>
         <Button
             android:visibility="visible"
             android:layout_width="match_parent"

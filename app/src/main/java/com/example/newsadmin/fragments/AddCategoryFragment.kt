@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.MimeTypeMap
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.newsadmin.data.CategoriesData
 import com.example.newsadmin.databinding.FragmentAddCategoryBinding
@@ -35,6 +36,7 @@ class AddCategoryFragment : Fragment() {
     private var fileUri: Uri? = null
     private var bitmap: Bitmap? = null
     private var ext:String? = null
+    // end image variables
 
 
 
@@ -54,6 +56,46 @@ class AddCategoryFragment : Fragment() {
         }
 
         binding.addCategoryButton.setOnClickListener {
+            val name : String = binding.nameCategory.text.toString()
+            val description : String = binding.descriptionCategory.text.toString()
+            if (name.length<2){
+                Toast.makeText(requireContext(),"Le nom doit contenir au moins 3 caractères",Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+            if (description.length<5){
+                Toast.makeText(requireContext(),"La description doit contenir au moins 5 caractères",Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+            if (file==null){
+                Toast.makeText(requireContext(),"Veuillez choisir une image",Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+            binding.progressBar.visibility = View.VISIBLE
+            binding.addCategoryButton.visibility = View.GONE
+
+            categoryData.addCategory(
+                name,
+                description,
+                file!!,
+                {
+                    requireActivity().runOnUiThread {
+                        Toast.makeText(requireContext(),"Catégorie ajoutée avec succès",Toast.LENGTH_LONG).show()
+                        binding.nameCategory.text.clear()
+                        binding.descriptionCategory.text.clear()
+                        binding.progressBar.visibility = View.GONE
+                        binding.addCategoryButton.visibility = View.VISIBLE
+                    }
+
+                },
+                {
+                    requireActivity().runOnUiThread {
+                        Toast.makeText(requireContext(),it,Toast.LENGTH_LONG).show()
+                        binding.progressBar.visibility = View.GONE
+                        binding.addCategoryButton.visibility = View.VISIBLE
+                    }
+
+                }
+            )
         }
 
 

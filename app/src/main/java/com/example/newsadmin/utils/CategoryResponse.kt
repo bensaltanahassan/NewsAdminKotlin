@@ -7,3 +7,9 @@ data class GetAllCategoriesResponse(
     val status: String,
     val data: List<Category>
 )
+
+data class AddCategoryResponse(
+    val status: String,
+    val message: String?=null,
+    val data: Category?=null
+)

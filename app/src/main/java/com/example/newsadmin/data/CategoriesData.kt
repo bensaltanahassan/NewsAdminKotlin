@@ -1,6 +1,7 @@
 package com.example.newsadmin.data
 
 import Crud
+import com.example.newsadmin.utils.AddCategoryResponse
 import com.example.newsadmin.utils.GetAllCategoriesResponse
 import com.google.gson.Gson
 import okhttp3.Call
@@ -23,10 +24,32 @@ class CategoriesData {
     fun addCategory(
         name:String,
         description:String,
-        image:File
+        image:File,
+        onSuccess: (AddCategoryResponse) -> Unit,
+        onFailure: (String) -> Unit
     ){
-
         val urlApi : String = baseUrl
+        val fieldsMap = mapOf<String,String>(
+            "name" to name,
+            "description" to description
+        )
+        crud.postWithImage(
+            urlApi,
+            token,
+            image,
+            fieldsMap,
+            object: Crud.ResponseCallback{
+                override fun onResponse(call: Call, response: Response) {
+                    val response = response.body?.string()
+                    val gson = Gson()
+                    val addCategoryResponse = gson.fromJson(response, AddCategoryResponse::class.java)
+                    onSuccess(addCategoryResponse)
+                }
+                override fun onFailure(call: Call, e: IOException) {
+                    onFailure(e.message!!)
+                }
+            }
+        )
 
     }
 

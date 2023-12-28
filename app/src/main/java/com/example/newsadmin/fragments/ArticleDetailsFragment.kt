@@ -1,6 +1,11 @@
 package com.example.newsadmin.fragments
 
 import SharedPreferencesManager
+import android.app.Activity
+import android.content.ContentResolver
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,24 +14,34 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.navArgs
 import com.example.newsadmin.R
+import com.example.newsadmin.data.NewsData
 import com.example.newsadmin.data.RatingData
 import com.example.newsadmin.databinding.FragmentArticleDetailsBinding
 import com.example.newsadmin.models.News
 import com.example.newsadmin.models.User
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileInputStream
+import android.net.Uri
 
 class ArticleDetailsFragment : Fragment() {
     private lateinit var _binding : FragmentArticleDetailsBinding
     private val binding get() = _binding!!
 
     private lateinit var toolbar : Toolbar
+
+    //image
+    private var file: File? = null
+    private var fileUri: Uri? = null
+    private var bitmap: Bitmap? = null
+    private var ext:String? = null
+
     val args: com.example.newsadmin.fragments.ArticleDetailsFragmentArgs by navArgs()
     private lateinit var news:News
     private final lateinit var rateData:RatingData
@@ -34,6 +49,7 @@ class ArticleDetailsFragment : Fragment() {
     private lateinit var user: User
     private lateinit var userId:String
     private  var token:String? = null
+    private lateinit var newsData: NewsData
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -57,13 +73,13 @@ class ArticleDetailsFragment : Fragment() {
         user = sharedPref.getUser()!!
         userId = user._id
         token = user.token
-        rateData = RatingData(userId,token!!)
+        newsData = NewsData(userId,token!!)
 
 
-        binding.articleAuthor.text = news.author
-        binding.articleName.text = news.title
-        binding.articleContent.text = news.content
-        binding.articleDate.text = formatDate(news.createdAt)
+
+        binding.articleAuthor.setText(news.author)
+        binding.articleName.setText(news.title)
+        binding.articleContent.setText(news.content)
         //load image
         val request = coil.request.ImageRequest.Builder(binding.imageArticleDetails.context)
             .data(news.image.url)
@@ -85,33 +101,115 @@ class ArticleDetailsFragment : Fragment() {
                 }
             ).build()
         coil.ImageLoader(binding.imageArticleDetails.context).enqueue(request)
-
-        val ratingBar = binding.ratingBar
-        ratingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
-            handleRating(news._id,ratingBar.rating.toInt())
+        binding.updateArticleImgBtn.setOnClickListener {
+            pickImage()
         }
+        binding.updateArticleButton.setOnClickListener {
+            binding.updateArticleButton.visibility = View.GONE
+            binding.progressBarButtonClick.visibility = View.VISIBLE
+            if (file==null){
+                updateArticle()
+            }else{
+                updateArticleWithImage()
+            }
+        }
+
 
 
         return binding.root
     }
-    fun formatDate(date: String): String {
-        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
-        val outputFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
-        val date: Date = inputFormat.parse(date)!!
-        val formattedDate:String = outputFormat.format(date)
-        return formattedDate
-    }
-    fun handleRating (articleId:String, rating:Int){
-        rateData.handleRating(articleId,rating, onSuccess = {responseRateData ->
-            Log.d("rating",responseRateData.toString())
-            requireActivity().runOnUiThread(){
-                binding.ratingId.visibility = View.VISIBLE
-                binding.ratingId.text = responseRateData.data.rating.toString()
-                Toast.makeText(requireContext(),"Avis ajouté avec succes",Toast.LENGTH_SHORT).show()
+    fun updateArticleWithImage(){
+        newsData.updateArticleWithImage(
+            news._id,
+            binding.articleName.text.toString(),
+            binding.articleAuthor.text.toString(),
+            binding.articleContent.text.toString(),
+            news.categoryId._id,
+            file!!,
+            onSuccess = { result ->
+                requireActivity().runOnUiThread {
+                    binding.updateArticleButton.visibility = View.VISIBLE
+                    binding.progressBarButtonClick.visibility = View.GONE
+                    Toast.makeText(requireContext(), "Article updated successfully", Toast.LENGTH_SHORT).show()
+                }
+            },
+            onFailure = { error ->
+                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
             }
-        }, onFailure = {
-            Toast.makeText(requireContext(),"Erreur lors de l'ajout de l'avis",Toast.LENGTH_SHORT).show()
-        })
+        )
+    }
+    fun updateArticle(){
+        newsData.updateArticle(
+            news._id,
+            binding.articleName.text.toString(),
+            binding.articleAuthor.text.toString(),
+            binding.articleContent.text.toString(),
+            news.categoryId._id,
+            onSuccess = { result ->
+                requireActivity().runOnUiThread {
+                    binding.updateArticleButton.visibility = View.VISIBLE
+                    binding.progressBarButtonClick.visibility = View.GONE
+                    Toast.makeText(requireContext(), "Article updated successfully", Toast.LENGTH_SHORT).show()
+                }
+            },
+            onFailure = { error ->
+                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+            }
+        )
+    }
+
+    private fun pickImage() {
+        val intent: Intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, 1000)
+    }
+
+
+    private fun prepareToUploadImage(){
+        val byteArrayOutputStream: ByteArrayOutputStream = ByteArrayOutputStream()
+        if (bitmap!=null){
+            bitmap!!.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream)
+            val bytes= byteArrayOutputStream.toByteArray()
+            val imageFile = File(requireContext().cacheDir,"image.$ext")
+            imageFile.writeBytes(bytes)
+            file = imageFile
+
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK && requestCode == 1000){
+            fileUri = data?.data
+            try {
+                fileUri?.let { uri ->
+                    val contentResolver: ContentResolver = requireActivity().contentResolver
+                    val inputStream = contentResolver.openInputStream(uri)
+                    val type = contentResolver.getType(uri)
+                    val extension = MimeTypeMap.getSingleton().getExtensionFromMimeType(type)
+
+
+                    if (inputStream != null && extension != null) {
+                        file = File(requireContext().cacheDir, "image.$extension")
+                        inputStream.use { input ->
+                            file!!.outputStream().use { output ->
+                                input.copyTo(output)
+                            }
+                        }
+                        ext = extension
+                        bitmap = BitmapFactory.decodeStream(FileInputStream(file))
+                        binding.imageArticleDetails.setImageBitmap(bitmap)
+
+                        prepareToUploadImage()
+
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
 }

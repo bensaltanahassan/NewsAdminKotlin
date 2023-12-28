@@ -5,6 +5,7 @@ import com.example.newsadmin.models.Category
 import com.example.newsadmin.utils.AddCategoryResponse
 import com.example.newsadmin.utils.GetSingleNewsResponse
 import com.example.newsadmin.utils.ResponseNewsData
+import com.example.newsadmin.utils.UpdateArticleResponse
 import com.google.gson.Gson
 import okhttp3.Call
 import okhttp3.Response
@@ -139,6 +140,77 @@ class NewsData {
             }
         )
 
+    }
+
+    fun updateArticle(
+        id:String,
+        title:String,
+        author: String,
+        description:String,
+        categoryId:String,
+        onSuccess: (UpdateArticleResponse) -> Unit,
+        onFailure: (String) -> Unit
+    ){
+        val urlApi : String = "$baseUrl/articles/$id"
+        val json = """
+            {
+                "title": "$title",
+                "author": "$author",
+                "content": "$description",
+                "categoryId": "$categoryId"
+            }
+        """.trimIndent()
+        crud.update(
+            urlApi,
+            json,
+            token,
+            object: Crud.ResponseCallback{
+                override fun onResponse(call: Call, response: Response) {
+                    val response = response.body?.string()
+                    val gson = Gson()
+                    val updateArticleResponse = gson.fromJson(response, UpdateArticleResponse::class.java)
+                    onSuccess(updateArticleResponse)
+                }
+                override fun onFailure(call: Call, e: IOException) {
+                    onFailure(e.message!!)
+                }
+            }
+        )
+    }
+    fun updateArticleWithImage(
+        id:String,
+        title:String,
+        author: String,
+        description:String,
+        categoryId:String,
+        image:File,
+        onSuccess: (UpdateArticleResponse) -> Unit,
+        onFailure: (String) -> Unit
+    ){
+        val urlApi : String = "$baseUrl/articles/$id"
+        val fieldsMap = mapOf<String,String>(
+            "title" to title,
+            "author" to author,
+            "content" to description,
+            "categoryId" to categoryId
+        )
+        crud.putWithImageAnas(
+            urlApi,
+            token,
+            image,
+            fieldsMap,
+            object: Crud.ResponseCallback{
+                override fun onResponse(call: Call, response: Response) {
+                    val response = response.body?.string()
+                    val gson = Gson()
+                    val updateArticleResponse = gson.fromJson(response, UpdateArticleResponse::class.java)
+                    onSuccess(updateArticleResponse)
+                }
+                override fun onFailure(call: Call, e: IOException) {
+                    onFailure(e.message!!)
+                }
+            }
+        )
     }
 
 

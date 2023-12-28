@@ -25,3 +25,7 @@ data class AddArticleResponse(
     val status: String,
     val data: News
 )
+data class UpdateArticleResponse(
+    val status: String,
+    val message: String?= null
+)

@@ -141,6 +141,9 @@
         <argument
             android:name="category"
             app:argType="com.example.newsadmin.models.Category" />
+        <action
+            android:id="@+id/action_categoryDetailsFragment_to_categoriesFragment"
+            app:destination="@id/categoriesFragment" />
     </fragment>
     <fragment
         android:id="@+id/addCategoryFragment"

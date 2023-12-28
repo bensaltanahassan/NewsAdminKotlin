@@ -13,3 +13,11 @@ data class AddCategoryResponse(
     val message: String?=null,
     val data: Category?=null
 )
+data class GetSingleCategoryResponse(
+    val status: String,
+    val data: CategoryData
+)
+data class CategoryData(
+    val category: Category,
+    val numberOfArticles: Int
+)

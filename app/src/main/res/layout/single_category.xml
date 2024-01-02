@@ -37,7 +37,6 @@
                 android:id="@+id/imageViewCategory"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/sport"
                 />
         </com.google.android.material.card.MaterialCardView>
 

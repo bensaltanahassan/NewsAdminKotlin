@@ -80,49 +80,6 @@
         app:cornerRadius = "20dp"/>
     </LinearLayout>
     </androidx.cardview.widget.CardView>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="Vous n'avez pas encore un compte ? "
-            android:textSize="14sp"
-            android:textAlignment="center"
-            android:id="@+id/signupText"
-            android:textColor="@color/purple"
-            android:layout_marginBottom="20dp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="S'inscrire"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:id="@+id/signupButton"
-            android:textColor="@color/purple"
-            android:layout_marginBottom="20dp"
-            android:clickable="true"/>
 
-    </LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="Mot de passe oublié"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:id="@+id/forgotPasswordButton"
-        android:textColor="@color/purple"
-        android:layout_marginBottom="20dp"
-        android:clickable="true"
-        android:onClick="onForgotPasswordClick"/>
+
 </LinearLayout>

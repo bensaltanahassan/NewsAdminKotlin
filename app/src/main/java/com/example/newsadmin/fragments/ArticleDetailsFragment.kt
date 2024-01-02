@@ -29,6 +29,7 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileInputStream
 import android.net.Uri
+import com.example.newsadmin.utils.UpdateArticleResponse
 
 class ArticleDetailsFragment : Fragment() {
     private lateinit var _binding : FragmentArticleDetailsBinding
@@ -130,7 +131,7 @@ class ArticleDetailsFragment : Fragment() {
                 requireActivity().runOnUiThread {
                     binding.updateArticleButton.visibility = View.VISIBLE
                     binding.progressBarButtonClick.visibility = View.GONE
-                    Toast.makeText(requireContext(), "Article updated successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
                 }
             },
             onFailure = { error ->
@@ -149,7 +150,7 @@ class ArticleDetailsFragment : Fragment() {
                 requireActivity().runOnUiThread {
                     binding.updateArticleButton.visibility = View.VISIBLE
                     binding.progressBarButtonClick.visibility = View.GONE
-                    Toast.makeText(requireContext(), "Article updated successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
                 }
             },
             onFailure = { error ->

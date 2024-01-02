@@ -1,6 +1,7 @@
 package com.example.newsadmin.data
 
 import Crud
+import android.util.Log
 import com.example.newsadmin.models.Category
 import com.example.newsadmin.utils.AddCategoryResponse
 import com.example.newsadmin.utils.GetSingleNewsResponse
@@ -170,6 +171,7 @@ class NewsData {
                     val gson = Gson()
                     val updateArticleResponse = gson.fromJson(response, UpdateArticleResponse::class.java)
                     onSuccess(updateArticleResponse)
+                    Log.d("response",updateArticleResponse.toString())
                 }
                 override fun onFailure(call: Call, e: IOException) {
                     onFailure(e.message!!)
@@ -205,6 +207,7 @@ class NewsData {
                     val gson = Gson()
                     val updateArticleResponse = gson.fromJson(response, UpdateArticleResponse::class.java)
                     onSuccess(updateArticleResponse)
+                    Log.d("response",updateArticleResponse.toString())
                 }
                 override fun onFailure(call: Call, e: IOException) {
                     onFailure(e.message!!)

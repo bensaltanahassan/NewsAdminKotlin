@@ -2,6 +2,7 @@ package com.example.newsadmin.fragments
 
 import Crud
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -40,11 +41,6 @@ class LoginFragment : Fragment() {
             login(email,password)
         }
 
-        binding.forgotPasswordButton.setOnClickListener{
-
-        }
-        binding.signupButton.setOnClickListener{
-        }
         return binding.root
     }
 
@@ -63,6 +59,8 @@ class LoginFragment : Fragment() {
                                 "Vous n'avez le droit d'accéder à cette application",
                                 Toast.LENGTH_SHORT
                             ).show()
+                            binding.loginButton.visibility = View.VISIBLE
+                            binding.progressBar.visibility = View.GONE
                         }
                         return@login
                     }

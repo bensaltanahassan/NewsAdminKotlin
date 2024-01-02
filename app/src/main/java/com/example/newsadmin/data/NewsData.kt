@@ -153,25 +153,22 @@ class NewsData {
         onFailure: (String) -> Unit
     ){
         val urlApi : String = "$baseUrl/articles/$id"
-        val json = """
-            {
-                "title": "$title",
-                "author": "$author",
-                "content": "$description",
-                "categoryId": "$categoryId"
-            }
-        """.trimIndent()
-        crud.update(
+        val fieldsMap = mapOf<String,String>(
+            "title" to title,
+            "author" to author,
+            "content" to description,
+            "categoryId" to categoryId
+        )
+        crud.putWithoutImage(
             urlApi,
-            json,
             token,
+            fieldsMap,
             object: Crud.ResponseCallback{
                 override fun onResponse(call: Call, response: Response) {
                     val response = response.body?.string()
                     val gson = Gson()
                     val updateArticleResponse = gson.fromJson(response, UpdateArticleResponse::class.java)
                     onSuccess(updateArticleResponse)
-                    Log.d("response",updateArticleResponse.toString())
                 }
                 override fun onFailure(call: Call, e: IOException) {
                     onFailure(e.message!!)

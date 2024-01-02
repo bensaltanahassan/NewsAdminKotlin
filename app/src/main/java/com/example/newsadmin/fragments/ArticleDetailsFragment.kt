@@ -131,7 +131,7 @@ class ArticleDetailsFragment : Fragment() {
                 requireActivity().runOnUiThread {
                     binding.updateArticleButton.visibility = View.VISIBLE
                     binding.progressBarButtonClick.visibility = View.GONE
-                    Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Article mis à jour avec succés !", Toast.LENGTH_SHORT).show()
                 }
             },
             onFailure = { error ->
@@ -150,7 +150,7 @@ class ArticleDetailsFragment : Fragment() {
                 requireActivity().runOnUiThread {
                     binding.updateArticleButton.visibility = View.VISIBLE
                     binding.progressBarButtonClick.visibility = View.GONE
-                    Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Article mis à jour avec succés !", Toast.LENGTH_SHORT).show()
                 }
             },
             onFailure = { error ->

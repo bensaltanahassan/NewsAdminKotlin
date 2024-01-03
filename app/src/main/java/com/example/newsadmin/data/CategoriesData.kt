@@ -134,4 +134,37 @@ class CategoriesData {
 
 
     }
+    fun updateCategoryWithoutImage(
+        id:String,
+        name:String,
+        description:String,
+        onSuccess: (AddCategoryResponse) -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+        val urlApi: String = "$baseUrl$id"
+        val fieldsMap = mapOf<String, String>(
+            "name" to name,
+            "description" to description
+        )
+        crud.putWithoutImage(
+            urlApi,
+            token,
+            fieldsMap,
+            object : Crud.ResponseCallback {
+                override fun onResponse(call: Call, response: Response) {
+                    val response = response.body?.string()
+                    val gson = Gson()
+                    val addCategoryResponse =
+                        gson.fromJson(response, AddCategoryResponse::class.java)
+                    onSuccess(addCategoryResponse)
+                }
+
+                override fun onFailure(call: Call, e: IOException) {
+                    onFailure(e.message!!)
+                }
+            }
+        )
+
+
+    }
 }

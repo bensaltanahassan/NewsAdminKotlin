@@ -96,32 +96,50 @@ class CategoryDetailsFragment : Fragment() {
             binding.updateCategoryBtn.setOnClickListener {
                 val name = binding.categoryName.text.toString()
                 val description = binding.categoryDescription.text.toString()
-                if (file==null){
-                    Toast.makeText(requireContext(),"Veuillez choisir une image",Toast.LENGTH_LONG).show()
-                    return@setOnClickListener
-                }
                 if (name.isNotEmpty() && description.isNotEmpty()){
-                    binding.progressBar.visibility = View.VISIBLE
-                    binding.categoyHome.visibility = View.GONE
-                    categoriesData.updateCategory(
-                        categoryId,
-                        name,
-                        description,
-                        file!!,
-                        {
-                            requireActivity().runOnUiThread {
-                                binding.progressBar.visibility = View.GONE
-                                binding.categoyHome.visibility = View.VISIBLE
-                                Toast.makeText(requireContext(),"Catégorie modifiée avec succès",Toast.LENGTH_SHORT).show()
+                    binding.progressBarButton.visibility = View.VISIBLE
+                    binding.updateCategoryBtn.visibility = View.GONE
+                    if(file == null){
+                        categoriesData.updateCategoryWithoutImage(
+                            categoryId,
+                            name,
+                            description,
+                            {
+                                requireActivity().runOnUiThread {
+                                    binding.progressBarButton.visibility = View.GONE
+                                    binding.updateCategoryBtn.visibility = View.VISIBLE
+                                    Toast.makeText(requireContext(),"Catégorie modifiée avec succès",Toast.LENGTH_SHORT).show()
+                                }
+                            },
+                            {
+                                requireActivity().runOnUiThread {
+                                    binding.progressBarButton.visibility = View.GONE
+                                    binding.updateCategoryBtn.visibility = View.VISIBLE
+                                }
                             }
-                        },
-                        {
-                            requireActivity().runOnUiThread {
-                                binding.progressBar.visibility = View.GONE
-                                binding.categoyHome.visibility = View.VISIBLE
+                        )
+                    }
+                    else{
+                        categoriesData.updateCategory(
+                            categoryId,
+                            name,
+                            description,
+                            file!!,
+                            {
+                                requireActivity().runOnUiThread {
+                                    binding.progressBarButton.visibility = View.GONE
+                                    binding.updateCategoryBtn.visibility = View.VISIBLE
+                                    Toast.makeText(requireContext(),"Catégorie modifiée avec succès",Toast.LENGTH_SHORT).show()
+                                }
+                            },
+                            {
+                                requireActivity().runOnUiThread {
+                                    binding.progressBarButton.visibility = View.GONE
+                                    binding.updateCategoryBtn.visibility = View.VISIBLE
+                                }
                             }
-                        }
-                    )
+                        )
+                    }
                 }else{
                     Toast.makeText(requireContext(),"Veuillez remplir tous les champs",Toast.LENGTH_SHORT).show()
                     return@setOnClickListener

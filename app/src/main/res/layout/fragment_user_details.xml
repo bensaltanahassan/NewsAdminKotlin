@@ -76,15 +76,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/user_is_account_verified"
-            android:text="Compte vérifier :"
+            android:text="Compte Status :"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginBottom="10dp" />
         <TextView
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:id="@+id/custom_user_create_at"
             android:paddingVertical="5dp"
+            android:paddingHorizontal="8dp"
             android:layout_height="wrap_content"
             android:text="True"
             android:background="@drawable/border_background"

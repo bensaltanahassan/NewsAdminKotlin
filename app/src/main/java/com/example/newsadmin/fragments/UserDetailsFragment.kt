@@ -85,7 +85,11 @@ class UserDetailsFragment : Fragment() {
         coil.ImageLoader(binding.imageUserDetails.context).enqueue(request)
         binding.userName.text = "${user.firstName} ${user.lastName}"
         binding.uerCreatedAt.text = "Membre depuis ${formatDate(user.createdAt)}"
-        binding.customUserCreateAt.text = user.isAccountVerified.capitalizeFirstLetter()
+        if (user.isAccountVerified){
+            binding.customUserCreateAt.text = "Compte vérifié"
+        }else{
+            binding.customUserCreateAt.text = "Compte non vérifié"
+        }
         binding.userEmail.text = user.email
 
         Log.d("user",user.toString())

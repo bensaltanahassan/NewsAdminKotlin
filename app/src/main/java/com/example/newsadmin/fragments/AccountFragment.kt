@@ -103,7 +103,7 @@ class AccountFragment : Fragment() {
         )
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-        binding.navView.setCheckedItem(R.id.homePageDrawer)
+        binding.navView.setCheckedItem(R.id.profilePageDrawer)
         binding.navView.getHeaderView(0).findViewById<TextView>(R.id.nameHeaderMenu).text = user.firstName + " " + user.lastName
 
         binding.navView.setNavigationItemSelectedListener {
@@ -125,7 +125,7 @@ class AccountFragment : Fragment() {
                 }
                 R.id.logOutDrawer -> {
                     sharedPref.logout()
-                    findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
+                    findNavController().navigate(R.id.action_accountFragment_to_usersFragment)
                     true
                 }
                 else -> false
@@ -153,7 +153,7 @@ class AccountFragment : Fragment() {
                     true
                 }
                 R.id.users -> {
-                    findNavController().navigate(R.id.action_homeFragment_to_usersFragment)
+                    findNavController().navigate(R.id.action_accountFragment_to_usersFragment)
                     true
                 }
                 R.id.settings -> {

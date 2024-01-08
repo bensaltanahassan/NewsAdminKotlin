@@ -4,6 +4,7 @@ import Crud
 import android.util.Log
 import com.example.newsadmin.models.Category
 import com.example.newsadmin.utils.AddCategoryResponse
+import com.example.newsadmin.utils.DeleteNewsResponse
 import com.example.newsadmin.utils.GetSingleNewsResponse
 import com.example.newsadmin.utils.ResponseNewsData
 import com.example.newsadmin.utils.UpdateArticleResponse
@@ -213,6 +214,30 @@ class NewsData {
         )
     }
 
+
+
+    fun deleteArticle(
+        id:String,
+        onSuccess: (DeleteNewsResponse) -> Unit,
+        onFailure: (String) -> Unit
+    ){
+        crud.delete(
+            "$baseUrl/articles/$id",
+            "",
+            token,
+            object: Crud.ResponseCallback{
+                override fun onResponse(call: Call, response: Response) {
+                    val response = response.body?.string()
+                    val gson = Gson()
+                    val deleteArticleResponse = gson.fromJson(response, DeleteNewsResponse::class.java)
+                    onSuccess(deleteArticleResponse)
+                }
+                override fun onFailure(call: Call, e: IOException) {
+                    onFailure(e.message!!)
+                }
+            }
+        )
+    }
 
 
 

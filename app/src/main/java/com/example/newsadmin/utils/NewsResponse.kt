@@ -9,6 +9,12 @@ data class ResponseNewsData(
 )
 
 
+data class DeleteNewsResponse(
+    val status: String,
+    val message: String?
+)
+
+
 data class GetSingleNewsResponse(
     val status: String,
     val data: SingleNewsResponse

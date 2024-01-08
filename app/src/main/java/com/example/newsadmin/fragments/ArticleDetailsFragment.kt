@@ -115,10 +115,33 @@ class ArticleDetailsFragment : Fragment() {
             }
         }
 
+        binding.deleteArticleBtn.setOnClickListener {
+            deleteArticle(news._id)
+        }
+
 
 
         return binding.root
     }
+
+    private fun deleteArticle(id: String) {
+        newsData.deleteArticle(
+            id,
+            {
+                requireActivity().runOnUiThread {
+                    Toast.makeText(requireContext(), "Article supprimé avec succés !", Toast.LENGTH_SHORT).show()
+                    requireActivity().onBackPressed()
+                }
+            },
+            {
+                requireActivity().runOnUiThread {
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                }
+            },
+        )
+
+    }
+
     fun updateArticleWithImage(){
         newsData.updateArticleWithImage(
             news._id,

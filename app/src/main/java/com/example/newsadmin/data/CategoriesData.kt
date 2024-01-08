@@ -2,6 +2,7 @@ package com.example.newsadmin.data
 
 import Crud
 import com.example.newsadmin.utils.AddCategoryResponse
+import com.example.newsadmin.utils.DeleteCategoryResponse
 import com.example.newsadmin.utils.GetAllCategoriesResponse
 import com.example.newsadmin.utils.GetSingleCategoryResponse
 import com.google.gson.Gson
@@ -19,6 +20,10 @@ class CategoriesData {
     constructor(token:String){
         this.token = token
     }
+
+
+
+
 
 
 
@@ -164,7 +169,31 @@ class CategoriesData {
                 }
             }
         )
+    }
 
+    fun deleteCategory(
+        id:String,
+        onSuccess: (DeleteCategoryResponse) -> Unit,
+        onFailure: (String) -> Unit
+    ){
+        val urlApi: String = "$baseUrl$id"
+        crud.delete(
+            urlApi,
+            "",
+            token,
+            object : Crud.ResponseCallback {
+                override fun onResponse(call: Call, response: Response) {
+                    val response = response.body?.string()
+                    val gson = Gson()
+                    val deleteCategoryResponse =
+                        gson.fromJson(response, DeleteCategoryResponse::class.java)
+                    onSuccess(deleteCategoryResponse)
+                }
 
+                override fun onFailure(call: Call, e: IOException) {
+                    onFailure(e.message!!)
+                }
+            }
+        )
     }
 }

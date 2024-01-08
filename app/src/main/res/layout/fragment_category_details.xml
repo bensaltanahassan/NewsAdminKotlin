@@ -133,6 +133,16 @@
             android:backgroundTint="@color/purple"
             android:layout_marginTop="30dp"
             app:cornerRadius = "10dp"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:id="@+id/deleteCategoryBtn"
+            android:text="Supprimer"
+            android:textSize="18sp"
+            android:backgroundTint="@color/red"
+            android:layout_marginTop="10dp"
+            app:cornerRadius = "10dp"/>
         <ProgressBar
             android:layout_width="70dp"
             android:layout_height="70dp"

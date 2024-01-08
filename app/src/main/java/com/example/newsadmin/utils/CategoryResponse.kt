@@ -8,6 +8,11 @@ data class GetAllCategoriesResponse(
     val data: List<Category>
 )
 
+
+data class DeleteCategoryResponse(
+    val status: String,
+    val message: String
+)
 data class AddCategoryResponse(
     val status: String,
     val message: String?=null,

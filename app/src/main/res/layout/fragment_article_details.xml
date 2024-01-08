@@ -139,6 +139,15 @@
             android:layout_marginTop="30dp"
             android:backgroundTint="@color/purple"
             app:cornerRadius = "10dp"/>
+
+        <ProgressBar
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/progressBarButtonClick"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:visibility="gone"/>
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -149,12 +158,13 @@
             android:backgroundTint="@color/red"
             android:layout_marginTop="10dp"
             app:cornerRadius = "10dp"/>
+
         <ProgressBar
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:id="@+id/progressBarButtonClick"
+            android:id="@+id/progressBarDelete"
             android:layout_gravity="center"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:visibility="gone"/>
         </LinearLayout>
 

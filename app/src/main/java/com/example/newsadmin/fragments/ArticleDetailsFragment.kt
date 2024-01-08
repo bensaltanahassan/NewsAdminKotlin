@@ -116,6 +116,8 @@ class ArticleDetailsFragment : Fragment() {
         }
 
         binding.deleteArticleBtn.setOnClickListener {
+            binding.progressBarDelete.visibility = View.VISIBLE
+            binding.deleteArticleBtn.visibility = View.GONE
             deleteArticle(news._id)
         }
 
@@ -125,17 +127,21 @@ class ArticleDetailsFragment : Fragment() {
     }
 
     private fun deleteArticle(id: String) {
+
         newsData.deleteArticle(
             id,
             {
                 requireActivity().runOnUiThread {
-                    Toast.makeText(requireContext(), "Article supprimé avec succés !", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     requireActivity().onBackPressed()
+
                 }
             },
             {
                 requireActivity().runOnUiThread {
                     Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                    binding.progressBarDelete.visibility = View.GONE
+                    binding.deleteArticleBtn.visibility = View.VISIBLE
                 }
             },
         )

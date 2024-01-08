@@ -100,17 +100,21 @@ class CategoryDetailsFragment : Fragment() {
     }
 
     private fun deleteCategory(_id: String) {
+        binding.progressBarDelete.visibility = View.VISIBLE
+        binding.deleteCategoryBtn.visibility = View.GONE
         categoriesData.deleteCategory(
             _id,
             {
                 requireActivity().runOnUiThread {
                     Toast.makeText(requireContext(),"Catégorie supprimée avec succès",Toast.LENGTH_SHORT).show()
-                    findNavController().navigate(R.id.action_categoryDetailsFragment_to_categoriesFragment)
+                    requireActivity().onBackPressed()
                 }
             },
             {
                 requireActivity().runOnUiThread {
                     Toast.makeText(requireContext(),"Erreur lors de la suppression de la catégorie",Toast.LENGTH_SHORT).show()
+                    binding.deleteCategoryBtn.visibility = View.VISIBLE
+                    binding.progressBarDelete.visibility = View.GONE
                 }
             }
 
